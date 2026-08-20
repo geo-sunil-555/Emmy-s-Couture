@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier Lune — Couture in Motion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Drifting fabric swatches — signature motif, echoes the loose swatches in the photography -->
+<div class="swatch-field" aria-hidden="true">
+  <span class="swatch swatch--a"></span>
+  <span class="swatch swatch--b"></span>
+  <span class="swatch swatch--c"></span>
+  <span class="swatch swatch--d"></span>
+  <span class="thread thread--a"></span>
+  <span class="thread thread--b"></span>
+</div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="#" class="nav__mark">Atelier&nbsp;Lune</a>
+  <nav class="nav__links">
+    <a href="#collection">Collection</a>
+    <a href="#craft">Craft</a>
+    <a href="#visit">Visit</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero__img-wrap">
+    <img src="images/hero-burgundy-full.jpg" alt="A burgundy silk couture gown suspended mid-air, defying gravity in a sunlit atelier" class="hero__img" id="heroImg">
+  </div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <p class="eyebrow">Autumn Reverie — No. 1 Collection</p>
+    <h1 class="hero__title">Gravity is<br>a suggestion.</h1>
+    <p class="hero__sub">Each gown is cut, draped, and hand-finished to move as if weightless — silk that answers to breath, not thread count.</p>
+    <a href="#collection" class="btn">
+      <span>Enter the Atelier</span>
+    </a>
+  </div>
+  <div class="hero__scrollcue" aria-hidden="true">
+    <span></span>
+    <p>Scroll</p>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <p class="statement__text">
+    A gown should not simply be worn — it should <em>hover</em>, a half-second behind the body,
+    as though the fabric hasn't quite decided to land. That instant is where Atelier&nbsp;Lune works.
+  </p>
+</section>
+
+<!-- COLLECTION — horizontal scroll-jack gallery -->
+<section class="collection" id="collection">
+  <div class="collection__intro">
+    <p class="eyebrow">The Collection</p>
+    <h2>Three silhouettes, one instinct.</h2>
+  </div>
+
+  <div class="collection__pin">
+    <div class="collection__track" id="collectionTrack">
+
+      <article class="piece">
+        <div class="piece__img-wrap">
+          <img src="images/gown-ivory-blush.jpg" alt="A floating ivory and blush silk couture gown with lace embroidery" loading="lazy">
+        </div>
+        <div class="piece__info">
+          <span class="piece__no">Piece No. 01</span>
+          <h3>Voile</h3>
+          <p>Ivory silk with blush undertones, hand-finished lace at every hem. Cut for a bride who wants to float down the aisle, not walk it.</p>
+        </div>
+      </article>
+
+      <article class="piece">
+        <div class="piece__img-wrap">
+          <img src="images/gown-black-gold.jpg" alt="A floating black silk couture gown with gold embroidery" loading="lazy">
+        </div>
+        <div class="piece__info">
+          <span class="piece__no">Piece No. 02</span>
+          <h3>Éclipse</h3>
+          <p>Black silk traced in gold thread, for the room you want to go quiet when you enter it. Our most requested evening piece.</p>
+        </div>
+      </article>
+
+      <article class="piece">
+        <div class="piece__img-wrap">
+          <img src="images/gown-emerald.jpg" alt="A floating emerald silk couture gown with silver embroidery" loading="lazy">
+        </div>
+        <div class="piece__info">
+          <span class="piece__no">Piece No. 03</span>
+          <h3>Verte</h3>
+          <p>Deep emerald with a silvered hem, drawn from the color of light through old glass. A gown for the guest who arrives last, on purpose.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- CRAFTSMANSHIP -->
+<section class="craft" id="craft">
+  <div class="craft__sticky">
+    <div class="craft__img-wrap">
+      <img src="images/detail-burgundy-bodice.jpg" alt="Close-up of hand embroidery and beading on a burgundy silk couture bodice" loading="lazy">
+    </div>
+  </div>
+  <div class="craft__copy">
+    <p class="eyebrow">The Craft</p>
+    <h2 class="craft__line">Every gown begins with a wrist,<br>not a machine.</h2>
+    <p class="craft__para">Our embroiderers trace each pattern by hand, in beadwork passed down through three ateliers before this one. A single bodice can hold eleven days of stitching before it ever meets a body.</p>
+    <p class="craft__para">We don't chase symmetry. Hand-laid thread drifts a little from row to row — the same imperfection that tells you a fire was built by hand, not printed by one.</p>
+    <p class="craft__para">What you're looking at above is not a finished dress. It's the moment before one — the last thread, still catching the light.</p>
+  </div>
+</section>
+
+<!-- CLOSING CTA -->
+<section class="closing" id="visit">
+  <p class="eyebrow">By Appointment</p>
+  <h2>Come see it hold still.</h2>
+  <p class="closing__sub">Fittings begin in the atelier, where every piece in this collection lives before it travels.</p>
+  <a href="#" class="btn btn--dark"><span>Request a Fitting</span></a>
+</section>
+
+<footer class="footer">
+  <span>Atelier Lune</span>
+  <span>&copy; 2026 — Handmade, unhurried.</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
