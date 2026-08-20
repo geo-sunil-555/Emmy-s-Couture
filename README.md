@@ -107,7 +107,9 @@ _Add screenshots or a demo GIF here._
 
 ## 📄 License
 
-This project is private/unlicensed unless otherwise specified by the author.
+The source code in this repository is licensed under the MIT License.
+
+The "Emmy's Couture" name, brand identity, product names/descriptions, and imagery are fictional and used for demonstration/portfolio purposes only. They are not covered by the MIT License and should not be reused to represent a real commercial brand.
 
 ## 🙋 Author
 
