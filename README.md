@@ -111,4 +111,4 @@ This project is private/unlicensed unless otherwise specified by the author.
 
 ## 🙋 Author
 
-Built by [Your Name] — feel free to reach out or connect!
+Built by Geo sunil — feel free to reach out or connect!
