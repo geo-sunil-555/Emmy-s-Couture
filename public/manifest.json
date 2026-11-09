@@ -1,0 +1,52 @@
+{
+  "name": "Emmy's Couture — Bespoke South Indian Luxury Maison",
+  "short_name": "Emmy's Couture",
+  "description": "Discover Emmy's Couture — bespoke South Indian luxury fashion maison featuring Kanchipuram bridal sarees, royal half sarees, AI virtual silk drape, and private Kerala salon fittings.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#FDFBF7",
+  "theme_color": "#5C1A2E",
+  "categories": ["shopping", "lifestyle", "fashion"],
+  "launch_handler": {
+    "client_mode": ["focus-existing", "auto"]
+  },
+  "handle_links": "preferred",
+  "icons": [
+    {
+      "src": "/images/emmys_entry_editorial.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/emmys_entry_editorial.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "AI Virtual Silk Drape",
+      "short_name": "AI Try-On",
+      "description": "Preview couture creations under South Indian ceremony lighting",
+      "url": "/?action=virtual-tryon"
+    },
+    {
+      "name": "Bespoke Studio Customizer",
+      "short_name": "Bespoke Studio",
+      "description": "Design your custom Kanchipuram or bridal ensemble",
+      "url": "/#customizer"
+    },
+    {
+      "name": "Book Kerala Salon Fitting",
+      "short_name": "Book Salon",
+      "description": "Reserve a private fitting in Kochi, Trivandrum, or Kozhikode",
+      "url": "/?action=book-salon"
+    }
+  ]
+}
+

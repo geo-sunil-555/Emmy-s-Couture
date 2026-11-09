@@ -525,3 +525,126 @@ h1, h2, h3, h4, h5, h6 {
   left: 140%;
 }
 
+/* =========================================================
+   ANDROID 17 • MATERIAL 3 EXPRESSIVE & LIQUID GLASS SYSTEM
+   ========================================================= */
+
+:root {
+  --a17-spring: cubic-bezier(0.22, 1.28, 0.36, 1);
+  --a17-liquid-glass: rgba(253, 251, 247, 0.78);
+  --a17-liquid-glass-dark: rgba(34, 10, 18, 0.86);
+  --a17-border-glow: rgba(212, 175, 122, 0.48);
+}
+
+.a17-liquid-glass {
+  background: var(--a17-liquid-glass);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--a17-border-glow);
+  box-shadow: 0 12px 38px rgba(92, 26, 46, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.a17-liquid-glass-dark {
+  background: var(--a17-liquid-glass-dark);
+  backdrop-filter: blur(26px) saturate(190%);
+  -webkit-backdrop-filter: blur(26px) saturate(190%);
+  border: 1px solid rgba(212, 175, 122, 0.38);
+  box-shadow: 0 18px 48px rgba(18, 4, 9, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* M3 Expressive Split Button */
+.a17-split-btn-group {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 999px;
+  overflow: visible;
+  position: relative;
+  box-shadow: 0 4px 14px rgba(92, 26, 46, 0.1);
+}
+
+.a17-split-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-primary-burgundy);
+  color: #FDFBF7;
+  border: 1px solid var(--color-primary-burgundy);
+  border-right: 1px solid rgba(212, 175, 122, 0.35);
+  border-radius: 999px 4px 4px 999px;
+  padding: 8px 14px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.28s var(--a17-spring);
+}
+
+.a17-split-primary:hover {
+  background: var(--color-champagne-gold);
+  color: var(--color-primary-burgundy);
+  border-color: var(--color-champagne-gold);
+}
+
+.a17-split-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-burgundy);
+  color: var(--color-champagne-gold);
+  border: 1px solid var(--color-primary-burgundy);
+  border-left: none;
+  border-radius: 4px 999px 999px 4px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.28s var(--a17-spring);
+}
+
+.a17-split-secondary:hover {
+  background: #421120;
+  color: #FFFFFF;
+}
+
+/* Live Update Status Island Pulse */
+@keyframes a17LivePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(212, 175, 122, 0.7);
+  }
+  50% {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 6px rgba(212, 175, 122, 0);
+  }
+}
+
+.a17-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22C55E;
+  animation: a17LivePulse 2s infinite;
+}
+
+@keyframes a17SpringPop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.a17-spring-pop {
+  animation: a17SpringPop 0.32s var(--a17-spring) forwards;
+}
+
+/* Safe area padding for Android 17 Edge-to-Edge */
+@media (max-width: 900px) {
+  .main-site-container {
+    padding-bottom: 78px;
+  }
+}
+
+

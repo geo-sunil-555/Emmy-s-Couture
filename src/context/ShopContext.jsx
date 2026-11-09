@@ -238,6 +238,31 @@ export const ShopProvider = ({ children }) => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isStylistChatOpen, setIsStylistChatOpen] = useState(false);
 
+  // =========================================================
+  // ANDROID 17 • MATERIAL 3 EXPRESSIVE & CONTINUITY STATE
+  // =========================================================
+  const [hapticsEnabled, setHapticsEnabled] = useState(true);
+  const [globalSearchQuery, setGlobalSearchQuery] = useState('');
+  const [compareList, setCompareList] = useState(() => {
+    try {
+      const saved = localStorage.getItem('emmys_compare_list');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [isCompareOpen, setIsCompareOpen] = useState(false);
+  const [virtualTryOnProduct, setVirtualTryOnProduct] = useState(null);
+  const [isHandoffOpen, setIsHandoffOpen] = useState(false);
+  const [isLiveUpdateExpanded, setIsLiveUpdateExpanded] = useState(false);
+  const [liveTrackerStage, setLiveTrackerStage] = useState(1); // 0: Loom Reserved, 1: Pit-Loom Weaving, 2: 24k Zardozi, 3: 14-Pt Inspection, 4: Armored Courier
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('emmys_compare_list', JSON.stringify(compareList));
+    } catch {}
+  }, [compareList]);
+
   // Global Active Gown (Persistent Background while scrolling)
   const [activeGlobalGown, setActiveGlobalGown] = useState({
     id: 'editorial',
@@ -1499,6 +1524,144 @@ export const ShopProvider = ({ children }) => {
     setHasEnteredSite(false);
   };
 
+  // =========================================================
+  // ANDROID 17 • TACTILE HAPTICS, COMPARE, TRY-ON & HANDOFF
+  // =========================================================
+  const triggerHaptic = useCallback((pattern = 12) => {
+    if (!hapticsEnabled) return;
+    try {
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        navigator.vibrate(pattern);
+      }
+    } catch {}
+  }, [hapticsEnabled]);
+
+  const toggleCompareProduct = (productId) => {
+    triggerHaptic(15);
+    setCompareList((prev) => {
+      if (prev.includes(productId)) {
+        showToast('Removed creation from Couture Comparison Studio.', 'Compare Studio');
+        return prev.filter((id) => id !== productId);
+      }
+      if (prev.length >= 3) {
+        showToast('Comparison Studio holds up to 3 couture creations at once. Replacing oldest selection.', 'Compare Studio');
+        return [...prev.slice(1), productId];
+      }
+      const target = products.find((p) => p.id === productId);
+      showToast(`Added "${target?.name || 'Creation'}" to Couture Comparison Studio.`, 'Compare Studio');
+      return [...prev, productId];
+    });
+  };
+
+  const clearCompareList = () => {
+    triggerHaptic([10, 30, 10]);
+    setCompareList([]);
+    showToast('Comparison tray cleared.', 'Compare Studio');
+  };
+
+  const openVirtualTryOn = (product = null) => {
+    triggerHaptic(18);
+    const chosen = product || products[0] || INITIAL_PRODUCTS[0];
+    setVirtualTryOnProduct(chosen);
+  };
+
+  const generateHandoffSession = () => {
+    const payload = {
+      v: 17,
+      ts: Date.now(),
+      w: wishlist.slice(0, 8),
+      c: cart.map((item) => ({ id: item.id, s: item.size, q: item.quantity })).slice(0, 6),
+      cp: compareList
+    };
+    try {
+      const token = btoa(encodeURIComponent(JSON.stringify(payload)));
+      return {
+        token,
+        shortCode: `A17-${token.slice(0, 4).toUpperCase()}-${token.slice(-4).toUpperCase()}`,
+        url: `${window.location.origin}/?handoff=${encodeURIComponent(token)}`
+      };
+    } catch {
+      return {
+        token: 'EMMYS-A17-SYNC',
+        shortCode: 'A17-SYNC-2026',
+        url: window.location.origin
+      };
+    }
+  };
+
+  const importHandoffSession = (tokenOrUrl) => {
+    triggerHaptic([15, 40, 20]);
+    try {
+      let rawToken = (tokenOrUrl || '').trim();
+      if (rawToken.includes('handoff=')) {
+        const urlObj = new URL(rawToken);
+        rawToken = urlObj.searchParams.get('handoff') || '';
+      }
+      const decoded = JSON.parse(decodeURIComponent(atob(rawToken)));
+      if (decoded && decoded.v === 17) {
+        if (Array.isArray(decoded.w)) {
+          setWishlist(decoded.w);
+        }
+        if (Array.isArray(decoded.cp)) {
+          setCompareList(decoded.cp);
+        }
+        if (Array.isArray(decoded.c) && decoded.c.length > 0) {
+          const restoredCart = decoded.c
+            .map((entry) => {
+              const prod = products.find((p) => p.id === entry.id);
+              if (!prod) return null;
+              return {
+                key: `${prod.id}-${entry.s || 'Bespoke'}-Default-std`,
+                id: prod.id,
+                name: prod.name,
+                collection: prod.collection,
+                tag: prod.tag,
+                shortDesc: prod.shortDesc,
+                description: prod.description,
+                priceUSD: prod.priceUSD,
+                image: prod.images?.primary || prod.image,
+                size: entry.s || 'Bespoke Made-to-Measure',
+                color: (prod.colors && prod.colors[0]?.name) || 'Signature',
+                quantity: entry.q || 1
+              };
+            })
+            .filter(Boolean);
+          if (restoredCart.length > 0) {
+            setCart(restoredCart);
+          }
+        }
+        setHasEnteredSite(true);
+        showToast('Android 17 Cross-Device Handoff complete! Bag, Wishlist & Compare Studio synced.', 'Continue On Synced');
+        return { success: true };
+      }
+    } catch (err) {
+      console.warn('Handoff decode error:', err);
+    }
+    showToast('Could not verify Handoff token. Please paste a valid Android 17 Handoff link or token.', 'Handoff Notice');
+    return { success: false };
+  };
+
+  // Handle Android 17 App Shortcuts & Cross-Device URL Handoff on initial load
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const handoffToken = params.get('handoff');
+      const shortcutAction = params.get('action');
+      if (handoffToken) {
+        importHandoffSession(handoffToken);
+        window.history.replaceState({}, '', '/');
+      } else if (shortcutAction === 'virtual-tryon') {
+        setHasEnteredSite(true);
+        setVirtualTryOnProduct(products[0] || INITIAL_PRODUCTS[0]);
+        window.history.replaceState({}, '', '/');
+      } else if (shortcutAction === 'book-salon') {
+        setHasEnteredSite(true);
+        setIsAppointmentOpen(true);
+        window.history.replaceState({}, '', '/');
+      }
+    } catch {}
+  }, []);
+
   return (
     <ShopContext.Provider
       value={{
@@ -1615,7 +1778,29 @@ export const ShopProvider = ({ children }) => {
         adminTab,
         setAdminTab,
         // Supabase PostgreSQL status
-        isSupabaseConfigured
+        isSupabaseConfigured,
+        // Android 17 • Material 3 Expressive & Continuity Features
+        hapticsEnabled,
+        setHapticsEnabled,
+        triggerHaptic,
+        globalSearchQuery,
+        setGlobalSearchQuery,
+        compareList,
+        toggleCompareProduct,
+        clearCompareList,
+        isCompareOpen,
+        setIsCompareOpen,
+        virtualTryOnProduct,
+        setVirtualTryOnProduct,
+        openVirtualTryOn,
+        isHandoffOpen,
+        setIsHandoffOpen,
+        generateHandoffSession,
+        importHandoffSession,
+        isLiveUpdateExpanded,
+        setIsLiveUpdateExpanded,
+        liveTrackerStage,
+        setLiveTrackerStage
       }}
     >
       {children}

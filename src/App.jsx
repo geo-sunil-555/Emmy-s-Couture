@@ -25,6 +25,10 @@ const CheckoutModal = lazy(() => import('./components/CheckoutModal').then((m) =
 const StylistChat = lazy(() => import('./components/StylistChat').then((m) => ({ default: m.StylistChat })));
 const UserInboxModal = lazy(() => import('./components/UserInboxModal').then((m) => ({ default: m.UserInboxModal })));
 const AdminPage = lazy(() => import('./components/AdminPage').then((m) => ({ default: m.AdminPage })));
+const Android17Hub = lazy(() => import('./components/Android17Hub').then((m) => ({ default: m.Android17Hub })));
+const VirtualTryOnModal = lazy(() => import('./components/VirtualTryOnModal').then((m) => ({ default: m.VirtualTryOnModal })));
+const ProductCompareDrawer = lazy(() => import('./components/ProductCompareDrawer').then((m) => ({ default: m.ProductCompareDrawer })));
+const CrossDeviceHandoffModal = lazy(() => import('./components/CrossDeviceHandoffModal').then((m) => ({ default: m.CrossDeviceHandoffModal })));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -121,6 +125,10 @@ function MainContent() {
             <CheckoutModal />
             <StylistChat />
             <UserInboxModal />
+            <Android17Hub />
+            <VirtualTryOnModal />
+            <ProductCompareDrawer />
+            <CrossDeviceHandoffModal />
           </Suspense>
         </div>
       )}

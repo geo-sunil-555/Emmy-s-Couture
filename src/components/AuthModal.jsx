@@ -741,7 +741,7 @@ export const AuthModal = () => {
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
-                
+
                 {/* Forgot Password Option Trigger */}
                 <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '6px' }}>
                   <button

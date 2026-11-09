@@ -16,7 +16,9 @@ import {
   Crown,
   BookOpen,
   ShieldCheck,
-  Mail
+  Mail,
+  Scale,
+  ArrowRightLeft
 } from 'lucide-react';
 
 export const Navbar = () => {
@@ -32,13 +34,21 @@ export const Navbar = () => {
     setIsAdminOpen,
     isInboxOpen,
     setIsInboxOpen,
-    userMessages
+    userMessages,
+    globalSearchQuery,
+    setGlobalSearchQuery,
+    compareList,
+    setIsCompareOpen,
+    openVirtualTryOn,
+    setIsHandoffOpen,
+    triggerHaptic
   } = useShop();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const searchQuery = globalSearchQuery || '';
+  const setSearchQuery = setGlobalSearchQuery;
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const userDropdownRef = useRef(null);
@@ -685,7 +695,31 @@ export const Navbar = () => {
         </div>
 
         {/* Right Action Icons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '22px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          {/* Android 17 Gemini Nano AI Silk Drape Button */}
+          <button
+            onClick={() => openVirtualTryOn()}
+            className="hidden sm:flex"
+            style={{
+              background: 'rgba(92, 26, 46, 0.08)',
+              border: '1px solid rgba(212, 175, 122, 0.45)',
+              borderRadius: '999px',
+              padding: '6px 12px',
+              color: 'var(--color-primary-burgundy)',
+              cursor: 'pointer',
+              alignItems: 'center',
+              gap: '5px',
+              fontSize: '0.68rem',
+              fontWeight: 700,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase'
+            }}
+            title="Android 17 Gemini Nano AI Virtual Silk Drape"
+          >
+            <Sparkles size={13} style={{ color: 'var(--color-champagne-gold)' }} />
+            <span>AI Drape</span>
+          </button>
+
           {/* Search Toggle */}
           <button
             onClick={() => setSearchOpen(!searchOpen)}
@@ -701,6 +735,68 @@ export const Navbar = () => {
             aria-label="Search Collection"
           >
             <Search size={18} />
+          </button>
+
+          {/* Compare Studio Trigger */}
+          <button
+            onClick={() => {
+              triggerHaptic(10);
+              setIsCompareOpen(true);
+            }}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'var(--ivory-text)',
+              cursor: 'pointer',
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+            aria-label="Compare Creations"
+            title="Compare Couture Creations Side-by-Side"
+          >
+            <Scale size={18} />
+            {compareList.length > 0 && (
+              <span
+                style={{
+                  position: 'absolute',
+                  top: '-6px',
+                  right: '-8px',
+                  background: 'var(--color-primary-burgundy)',
+                  color: '#FDFBF7',
+                  fontSize: '0.62rem',
+                  fontWeight: 700,
+                  width: '16px',
+                  height: '16px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                {compareList.length}
+              </span>
+            )}
+          </button>
+
+          {/* Android 17 Continue On / Handoff Trigger */}
+          <button
+            onClick={() => {
+              triggerHaptic(12);
+              setIsHandoffOpen(true);
+            }}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'var(--ivory-text)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+            aria-label="Android 17 Continue On Handoff"
+            title="Android 17 Continue On Cross-Device Sync"
+          >
+            <ArrowRightLeft size={17} />
           </button>
 
           {/* Wishlist Icon */}
